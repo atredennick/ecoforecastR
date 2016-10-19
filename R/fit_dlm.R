@@ -101,7 +101,7 @@ fit_dlm <- function(model=NULL,data){
 }"
   
   #### prep data
-  mydat<-list(OBS=OBS,n=length(OBS),x_ic = 0,tau_ic = 0.00001,a_tot=0.1,r_tot=0.1)
+  mydat<-list(OBS=OBS,n=length(OBS),x_ic = 0,tau_ic = 0.00001,a_add=0.1,r_add=0.1)
 
   #### prep model
   
