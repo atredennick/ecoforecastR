@@ -20,7 +20,7 @@ fit_dlm <- function(model=NULL,data){
 
   data = as.data.frame(data)
   
-  out.variables = c("x","tau_obs","tau_add","beta_IC")
+  out.variables = c("x","tau_tot","beta_IC")
   
   
   ## observation design matrix
@@ -67,8 +67,9 @@ fit_dlm <- function(model=NULL,data){
   
   #### Priors
   x[1] ~ dnorm(x_ic,tau_ic)
-  tau_obs ~ dgamma(a_obs,r_obs)
-  tau_add ~ dgamma(a_add,r_add)
+  tau ~ dgamma(a_tot,r_tot)
+  #tau_obs ~ dgamma(a_obs,r_obs)
+  #tau_add ~ dgamma(a_add,r_add)
 
   #### Random Effects
   #RANDOM  tau_alpha~dgamma(0.1,0.1)
@@ -83,20 +84,20 @@ fit_dlm <- function(model=NULL,data){
   
   #### Data Model
   for(t in 1:n){
-    OBS[t] ~ dnorm(x[t],tau_obs)
+    OBS[t] ~ dnorm(mu[t],tau)
     ##MISSING
   }
   
   #### Process Model
   for(t in 2:n){
     mu[t] <- beta_IC*x[t-1] ##PROCESS
-    x[t]~dnorm(mu[t],tau_add)
+    # x[t]~dnorm(mu[t],tau_add) 
   }
 
   }"
   
   #### prep data
-  mydat<-list(OBS=OBS,n=length(OBS),x_ic = 0,tau_ic = 0.00001,a_obs=0.1,r_obs=0.1,a_add=0.1,r_add=0.1)
+  mydat<-list(OBS=OBS,n=length(OBS),x_ic = 0,tau_ic = 0.00001,a_tot=0.1,r_tot=0.1)
 
   #### prep model
   
