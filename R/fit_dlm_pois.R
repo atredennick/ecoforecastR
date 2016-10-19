@@ -1,5 +1,5 @@
-##' @name fit_dlm
-##' @title fit_dlm
+##' @name fit_dlm_pois
+##' @title fit_dlm_pois
 ##' @author Mike Dietze
 ##' @export
 ##' @param model list containing the following elements
@@ -10,7 +10,7 @@
 ##'  \item{n.iter}{number of mcmc iterations}
 ##' }
 ##' @param data  data frame containing observations and covariates
-##' @description Fits a Bayesian state-space dynamic linear model using JAGS
+##' @description Fits a Bayesian state-space dynamic linear model using JAGS, for count data
 fit_dlm <- function(model=NULL,data){
 
   obs   = model$obs
