@@ -20,7 +20,7 @@ fit_dlm <- function(model=NULL,data){
 
   data = as.data.frame(data)
   
-  out.variables = c("x","tau_add","beta_IC")
+  out.variables = c("x","shape","beta_IC")
   
   
   ## observation design matrix
@@ -69,8 +69,9 @@ fit_dlm <- function(model=NULL,data){
   x[1] ~ dnorm(x_ic,tau_ic)
   # tau_tot ~ dgamma(a_tot,r_tot)
   #tau_obs ~ dgamma(a_obs,r_obs)
-  tau_add ~ dgamma(a_add,r_add)
-  sigma_add <- 1/sqrt(tau_add)
+  #tau_add ~ dgamma(a_add,r_add)
+  #sigma_add <- 1/sqrt(tau_add)
+  shape ~ dunif(0, 100)
   
   #### Random Effects
   #RANDOM  tau_alpha~dgamma(0.1,0.1)
@@ -92,10 +93,8 @@ fit_dlm <- function(model=NULL,data){
   #### Process Model
   for(t in 2:n){
   mu[t] <- beta_IC*x[t-1] ##PROCESS
-  shape[t] <- mu[t]^2 / sigma_add^2
-  rate[t] <- mu[t] / sigma_add^2
   # x[t] ~ dnorm(mu[t], tau_add) 
-  x[t] ~ dgamma(shape[t], rate[t])
+  x[t] ~ dgamma(shape, shape / exp(mu[t]))
   }
   
 }"
