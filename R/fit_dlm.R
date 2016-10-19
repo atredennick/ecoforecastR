@@ -67,7 +67,7 @@ fit_dlm <- function(model=NULL,data){
   
   #### Priors
   x[1] ~ dnorm(x_ic,tau_ic)
-  tau ~ dgamma(a_tot,r_tot)
+  tau_tot ~ dgamma(a_tot,r_tot)
   #tau_obs ~ dgamma(a_obs,r_obs)
   #tau_add ~ dgamma(a_add,r_add)
 
@@ -84,7 +84,7 @@ fit_dlm <- function(model=NULL,data){
   
   #### Data Model
   for(t in 1:n){
-    OBS[t] ~ dnorm(x[t],tau)
+    OBS[t] ~ dnorm(x[t],tau_tot)
     ##MISSING
   }
   
