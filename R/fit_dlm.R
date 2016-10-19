@@ -84,13 +84,13 @@ fit_dlm <- function(model=NULL,data){
   
   #### Data Model
   for(t in 1:n){
-    OBS[t] ~ dnorm(mu[t],tau)
+    OBS[t] ~ dnorm(x[t],tau)
     ##MISSING
   }
   
   #### Process Model
   for(t in 2:n){
-    mu[t] <- beta_IC*x[t-1] ##PROCESS
+    x[t] <- beta_IC*x[t-1] ##PROCESS
     # x[t]~dnorm(mu[t],tau_add) 
   }
 
