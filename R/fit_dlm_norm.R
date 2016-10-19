@@ -1,5 +1,5 @@
-##' @name fit_dlm_pois
-##' @title fit_dlm_pois
+##' @name fit_dlm
+##' @title fit_dlm
 ##' @author Mike Dietze
 ##' @export
 ##' @param model list containing the following elements
@@ -10,7 +10,7 @@
 ##'  \item{n.iter}{number of mcmc iterations}
 ##' }
 ##' @param data  data frame containing observations and covariates
-##' @description Fits a Bayesian state-space dynamic linear model using JAGS, for count data
+##' @description Fits a Bayesian state-space dynamic linear model using JAGS
 fit_dlm <- function(model=NULL,data){
 
   obs   = model$obs
@@ -20,7 +20,7 @@ fit_dlm <- function(model=NULL,data){
 
   data = as.data.frame(data)
   
-  out.variables = c("x","tau_add","beta_IC")
+  out.variables = c("x","tau_tot","beta_IC")
   
   
   ## observation design matrix
@@ -67,10 +67,9 @@ fit_dlm <- function(model=NULL,data){
   
   #### Priors
   x[1] ~ dnorm(x_ic,tau_ic)
-  # tau_tot ~ dgamma(a_tot,r_tot)
+  tau_tot ~ dgamma(a_tot,r_tot)
   #tau_obs ~ dgamma(a_obs,r_obs)
-  tau_add ~ dgamma(a_add,r_add)
-  sigma_add <- 1/sqrt(tau_add)
+  #tau_add ~ dgamma(a_add,r_add)
 
   #### Random Effects
   #RANDOM  tau_alpha~dgamma(0.1,0.1)
@@ -85,17 +84,14 @@ fit_dlm <- function(model=NULL,data){
   
   #### Data Model
   for(t in 1:n){
-    OBS[t] ~ dpois(x[t])
+    OBS[t] ~ dnorm(x[t],tau_tot)
     ##MISSING
   }
   
   #### Process Model
   for(t in 2:n){
-    mu[t] <- beta_IC*x[t-1] ##PROCESS
-    shape[t] <- mu[t]^2 / sigma_add^2
-    rate[t] <- mu[t] / sigma_add^2
-    # x[t] ~ dnorm(mu[t], tau_add) 
-    x[t] ~ dgamma(shape[t], rate[t])
+    x[t] <- beta_IC*x[t-1] ##PROCESS
+    # x[t]~dnorm(mu[t],tau_add) 
   }
 
   }"
