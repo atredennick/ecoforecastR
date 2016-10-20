@@ -20,7 +20,7 @@ fit_dlm_norm <- function(model=NULL,data){
 
   data = as.data.frame(data)
   
-  out.variables = c("x","tau_tot","beta_IC")
+  out.variables = c("x","tau_add","tau_obs","beta_IC")
   
   
   ## observation design matrix
