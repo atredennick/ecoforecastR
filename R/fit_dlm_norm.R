@@ -90,8 +90,8 @@ fit_dlm_norm <- function(model=NULL,data){
   
   #### Process Model
   for(t in 2:n){
-  x[t] <- beta_IC*x[t-1] ##PROCESS
-  # x[t] ~ dnorm(mu[t], tau_add) 
+  mu[t] <- beta_IC*x[t-1] ##PROCESS
+  x[t] ~ dnorm(mu[t], tau_add) 
   }
   
 }"
