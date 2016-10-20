@@ -71,6 +71,7 @@ predict_dlm_lnorm <- function(fit,newdata=NULL,n.iter=5000,steps=NULL,start.time
   x = IC[index$I]
   beta_IC = params[index$P,"beta_IC"]
   beta    = params[index$P,paste0("beta",dimnames(newdata)[[3]])]
+  
   if("E" %in% include){
     tau_add = 1/sqrt(params[index$P,"tau_add"])  ## convert from precision to SD
   } else {
