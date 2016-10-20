@@ -67,7 +67,7 @@ fit_dlm_pois <- function(model=NULL,data){
   
   #### Priors
   #x[1] ~ dnorm(x_ic,tau_ic)
-  x[1] ~ dpois(1)
+  x[1] ~ dpois(x_ic)
 
   # tau_tot ~ dgamma(a_tot,r_tot)
   #tau_obs ~ dgamma(a_obs,r_obs)
@@ -102,7 +102,7 @@ fit_dlm_pois <- function(model=NULL,data){
 }"
   
   #### prep data
-  mydat<-list(OBS=OBS,n=length(OBS),x_ic = 0,tau_ic = 0.00001)
+  mydat<-list(OBS=OBS,n=length(OBS),x_ic = 1)
 
   #### prep model
   

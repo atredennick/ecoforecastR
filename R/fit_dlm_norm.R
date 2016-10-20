@@ -129,7 +129,6 @@ fit_dlm_norm <- function(model=NULL,data){
     out.variables = c(out.variables,"tau_alpha","alpha")  
     Pformula = " + alpha[rep[i]]"
     ## *****
-    ## need to do work here to specify indicator variables for random effects explictly
     ## *****
   }
   
