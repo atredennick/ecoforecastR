@@ -1,5 +1,5 @@
-##' @name predict_dlm_lnorm
-##' @title predict_dlm_lnorm
+##' @name predict_dlm_pois
+##' @title predict_dlm_pois
 ##' @export 
 ##' @author Mike Dietze and Andrew Tredennick
 ##' @description make predictions from fit dlm for new data
