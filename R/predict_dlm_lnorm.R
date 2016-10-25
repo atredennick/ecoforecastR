@@ -82,7 +82,7 @@ predict_dlm_lnorm <- function(fit,newdata=NULL,n.iter=5000,steps=NULL,start.time
   for(t in 1:steps){
     Z  = newdata[index$D,t,]
     mu = beta_IC*x #+ apply( Z * beta,1,sum)
-    x  = rnorm(n.iter,mu,tau_add)
+    x  = rlnorm(n.iter,mu,tau_add)
     predict[,t] = x
   }
   
