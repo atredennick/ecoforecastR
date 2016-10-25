@@ -70,7 +70,7 @@ predict_dlm_lnorm <- function(fit,newdata=NULL,n.iter=5000,steps=NULL,start.time
                      I = sample.int(length(IC),n.iter,replace=TRUE))
   x = IC[index$I]
   beta_IC = params[index$P,"beta_IC"]
-  beta    = params[index$P,paste0("beta",dimnames(newdata)[[3]])]
+  # beta    = params[index$P,paste0("beta",dimnames(newdata)[[3]])]
   
   if("E" %in% include){
     tau_add = 1/sqrt(params[index$P,"tau_add"])  ## convert from precision to SD
@@ -81,7 +81,7 @@ predict_dlm_lnorm <- function(fit,newdata=NULL,n.iter=5000,steps=NULL,start.time
   ## simulate
   for(t in 1:steps){
     Z  = newdata[index$D,t,]
-    mu = beta_IC*x + apply( Z * beta,1,sum)
+    mu = beta_IC*x #+ apply( Z * beta,1,sum)
     x  = rnorm(n.iter,mu,tau_add)
     predict[,t] = x
   }
